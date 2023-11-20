@@ -5,7 +5,7 @@ import org.example.model.TaskEntity;
 import org.example.model.dictionaries.TaskPriorityEnum;
 import org.example.model.dictionaries.TaskStatusEnum;
 import org.example.repository.impl.BaseRepository;
-import org.example.repository.impl.TaskRepositoryChild;
+import org.example.repository.impl.TaskRepository;
 import org.example.repository.mapper.TaskResultSetMapperImpl;
 import org.example.service.PerformerService;
 import org.example.service.TaskService;
@@ -86,7 +86,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public TaskServiceImpl() {
-        this.taskRepository = new TaskRepositoryChild(new ConnectionManagerImpl(), new TaskResultSetMapperImpl());
+        this.taskRepository = new TaskRepository(new ConnectionManagerImpl(), new TaskResultSetMapperImpl());
         this.taskDtoMapper = new TaskDtoMapperImpl();
     }
 

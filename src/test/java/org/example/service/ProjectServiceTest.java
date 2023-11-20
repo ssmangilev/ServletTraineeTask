@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.model.ProjectEntity;
-import org.example.repository.impl.ProjectRepositoryChild;
+import org.example.repository.impl.ProjectRepository;
 import org.example.service.impl.ProjectServiceImpl;
 import org.example.servlet.dto.IncomingProjectDto;
 import org.example.servlet.dto.OutGoingProjectDto;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 
 class ProjectServiceTest {
-    ProjectRepositoryChild repository = Mockito.mock(ProjectRepositoryChild.class);
+    ProjectRepository repository = Mockito.mock(ProjectRepository.class);
     ProjectDtoMapperImpl dtoMapper = Mockito.spy(ProjectDtoMapperImpl.class);
     @InjectMocks
     ProjectService service = new ProjectServiceImpl(repository, dtoMapper);

@@ -3,7 +3,7 @@ package org.example.service.impl;
 import org.example.db.ConnectionManagerImpl;
 import org.example.model.ProjectEntity;
 import org.example.repository.impl.BaseRepository;
-import org.example.repository.impl.ProjectRepositoryChild;
+import org.example.repository.impl.ProjectRepository;
 import org.example.repository.mapper.ProjectResultSetMapperImpl;
 import org.example.service.PerformerService;
 import org.example.service.ProjectService;
@@ -82,7 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     public ProjectServiceImpl() {
-        this.repository = new ProjectRepositoryChild(new ConnectionManagerImpl(), new ProjectResultSetMapperImpl());
+        this.repository = new ProjectRepository(new ConnectionManagerImpl(), new ProjectResultSetMapperImpl());
         this.projectDtoMapper = new ProjectDtoMapperImpl();
     }
 

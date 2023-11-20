@@ -12,8 +12,8 @@ import java.util.List;
  *
  * @see org.example.repository.impl.BaseRepository
  */
-public class PerformerRepositoryChild extends BaseRepository<PerformerEntity> {
-    public PerformerRepositoryChild(
+public class PerformerRepository extends BaseRepository<PerformerEntity> {
+    public PerformerRepository(
             ConnectionManager connectionManager, PerformerResultSetMapper performerResultSetMapper) {
         super(connectionManager, performerResultSetMapper, "trainee_servlet_task.performers");
     }

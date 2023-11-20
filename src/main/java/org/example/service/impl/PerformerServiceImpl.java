@@ -4,7 +4,7 @@ import org.example.db.ConnectionManagerImpl;
 import org.example.model.PerformerEntity;
 import org.example.model.dictionaries.PerformerRole;
 import org.example.repository.impl.BaseRepository;
-import org.example.repository.impl.PerformerRepositoryChild;
+import org.example.repository.impl.PerformerRepository;
 import org.example.repository.mapper.PerformerResultSetMapperImpl;
 import org.example.service.PerformerService;
 import org.example.servlet.dto.IncomingPerformerDto;
@@ -93,7 +93,7 @@ public class PerformerServiceImpl implements PerformerService {
     }
 
     public PerformerServiceImpl() {
-        this.repository = new PerformerRepositoryChild(new ConnectionManagerImpl(), new PerformerResultSetMapperImpl());
+        this.repository = new PerformerRepository(new ConnectionManagerImpl(), new PerformerResultSetMapperImpl());
         this.dtoMapper = new PerformerDtoMapperImpl();
     }
 

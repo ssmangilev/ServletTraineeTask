@@ -2,10 +2,9 @@ package org.example.repository.impl;
 
 import org.example.db.ConnectionManager;
 import org.example.db.ConnectionManagerImpl;
-import org.example.exceptions.TraineeServletException;
-import org.example.model.PerformerEntity;
-import org.example.repository.mapper.PerformerResultSetMapper;
-import org.example.repository.mapper.PerformerResultSetMapperImpl;
+import org.example.model.ProjectEntity;
+import org.example.repository.mapper.ProjectResultSetMapper;
+import org.example.repository.mapper.ProjectResultSetMapperImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,22 +12,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doAnswer;
 
-class PerformerRepositoryChildTest {
+@SuppressWarnings("ALL")
+class ProjectRepositoryTest {
 
     ConnectionManager connectionManager = Mockito.mock(ConnectionManagerImpl.class);
 
-    PerformerResultSetMapper resultSetMapper = new PerformerResultSetMapperImpl();
+    ProjectResultSetMapper resultSetMapper = new ProjectResultSetMapperImpl();
     @InjectMocks
-    PerformerRepositoryChild repository = new PerformerRepositoryChild(connectionManager, resultSetMapper);
+    ProjectRepository repository = new ProjectRepository(connectionManager, resultSetMapper);
 
     static String connectionUrl;
 
@@ -55,9 +53,9 @@ class PerformerRepositoryChildTest {
 
         //Given
         UUID uuid = UUID.randomUUID();
-        PerformerEntity entity = new PerformerEntity();
-        entity.setPerformerId(uuid);
-        entity.setName("Ivan");
+        ProjectEntity entity = new ProjectEntity();
+        entity.setProjectId(uuid);
+        entity.setProjectName("project");
 
         doAnswer(invocation -> DriverManager.getConnection(
                 connectionUrl,
@@ -65,8 +63,8 @@ class PerformerRepositoryChildTest {
                 postgres.getPassword())).when(connectionManager).getConnection();
 
         //When
-        PerformerEntity saved = repository.save(entity);
-        boolean actual = repository.deleteById(saved.getPerformerId());
+        ProjectEntity saved = repository.save(entity);
+        boolean actual = repository.deleteById(saved.getProjectId());
 
         //Then
         assertThat(saved).isNotNull();
@@ -78,9 +76,9 @@ class PerformerRepositoryChildTest {
 
         //Given
         UUID uuid = UUID.randomUUID();
-        PerformerEntity entity = new PerformerEntity();
-        entity.setPerformerId(uuid);
-        entity.setName("Ivan");
+        ProjectEntity entity = new ProjectEntity();
+        entity.setProjectId(uuid);
+        entity.setProjectName("project");
 
         doAnswer(invocation -> DriverManager.getConnection(
                 connectionUrl,
@@ -89,13 +87,13 @@ class PerformerRepositoryChildTest {
 
         //When
         repository.save(entity);
-        PerformerEntity actual = repository.findById(uuid);
+        ProjectEntity actual = repository.findById(uuid);
 
         //Then
         assertThat(actual)
                 .isNotNull()
-                .hasFieldOrPropertyWithValue("performerId", uuid)
-                .hasFieldOrPropertyWithValue("name", "Ivan");
+                .hasFieldOrPropertyWithValue("projectId", uuid)
+                .hasFieldOrPropertyWithValue("projectName", "project");
     }
 
     @Test
@@ -103,13 +101,13 @@ class PerformerRepositoryChildTest {
 
         //Given
         UUID uuid = UUID.randomUUID();
-        PerformerEntity entity = new PerformerEntity();
-        entity.setPerformerId(uuid);
-        entity.setName("Ivan");
+        ProjectEntity entity = new ProjectEntity();
+        entity.setProjectId(uuid);
+        entity.setProjectName("project");
 
-        PerformerEntity changed = new PerformerEntity();
-        changed.setPerformerId(uuid);
-        changed.setName("Vasya");
+        ProjectEntity changed = new ProjectEntity();
+        changed.setProjectId(uuid);
+        changed.setProjectName("qwerty");
 
         doAnswer(invocation -> DriverManager.getConnection(
                 connectionUrl,
@@ -119,10 +117,10 @@ class PerformerRepositoryChildTest {
         //When
         repository.save(entity);
         repository.update(changed);
-        PerformerEntity actual = repository.findById(uuid);
+        ProjectEntity actual = repository.findById(uuid);
 
         //Then
-        assertThat(actual).hasFieldOrPropertyWithValue("name", "Vasya");
+        assertThat(actual).hasFieldOrPropertyWithValue("projectName", "qwerty");
     }
 
     @Test
@@ -130,14 +128,14 @@ class PerformerRepositoryChildTest {
 
         //Given
         UUID uuid = UUID.randomUUID();
-        PerformerEntity entity = new PerformerEntity();
-        entity.setPerformerId(uuid);
-        entity.setName("Ivan");
+        ProjectEntity entity = new ProjectEntity();
+        entity.setProjectId(uuid);
+        entity.setProjectName("project");
 
         UUID uuid2 = UUID.randomUUID();
-        PerformerEntity entity2 = new PerformerEntity();
-        entity2.setPerformerId(uuid2);
-        entity2.setName("John");
+        ProjectEntity entity2 = new ProjectEntity();
+        entity2.setProjectId(uuid2);
+        entity2.setProjectName("project2");
 
         doAnswer(invocation -> DriverManager.getConnection(
                 connectionUrl,
@@ -147,7 +145,7 @@ class PerformerRepositoryChildTest {
         //When
         repository.save(entity);
         repository.save(entity2);
-        List<PerformerEntity> actual = repository.findAll();
+        List<ProjectEntity> actual = repository.findAll();
 
         //Then
         assertThat(actual)
@@ -160,9 +158,9 @@ class PerformerRepositoryChildTest {
 
         //Given
         UUID uuid = UUID.randomUUID();
-        PerformerEntity entity = new PerformerEntity();
-        entity.setPerformerId(uuid);
-        entity.setName("Ivan");
+        ProjectEntity entity = new ProjectEntity();
+        entity.setProjectId(uuid);
+        entity.setProjectName("project");
 
         doAnswer(invocation -> DriverManager.getConnection(
                 connectionUrl,
@@ -171,28 +169,41 @@ class PerformerRepositoryChildTest {
 
         //When
         repository.save(entity);
-        PerformerEntity actual = repository.findById(uuid);
+        ProjectEntity actual = repository.findById(uuid);
 
         //Then
         assertThat(actual)
                 .isNotNull()
-                .hasFieldOrPropertyWithValue("performerId", uuid)
-                .hasFieldOrPropertyWithValue("name", "Ivan");
+                .hasFieldOrPropertyWithValue("projectId", uuid)
+                .hasFieldOrPropertyWithValue("projectName", "project");
     }
 
     @Test
-    void should_throw_custom_exception_getById() throws SQLException {
-        //Given
-        UUID uuid= UUID.fromString("3bbf370e-a326-4fe9-b75c-46c00314d0e");
+    void should_return_entity_with_all_fields() throws SQLException {
 
+        //Given
         doAnswer(invocation -> DriverManager.getConnection(
                 connectionUrl,
                 postgres.getUsername(),
                 postgres.getPassword())).when(connectionManager).getConnection();
 
-        // When
+        UUID testUuid = null;
+        try (Connection connection = connectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getUuidForTest())) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                testUuid = (UUID) resultSet.getObject("project_id");
+            }
+        }
 
-        // Then
-       assertThrows(TraineeServletException.class,()-> repository.findById(uuid));
+        //When
+        ProjectEntity actual = repository.findById(testUuid);
+
+        //Then
+        assertThat(actual).hasNoNullFieldsOrProperties();
+    }
+
+    private String getUuidForTest() {
+        return "SELECT project_id from trainee_servlet_task.projects where project_name = 'Проект1';";
     }
 }

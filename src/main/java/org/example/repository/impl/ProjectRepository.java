@@ -1,11 +1,9 @@
 package org.example.repository.impl;
 
 import org.example.db.ConnectionManager;
-import org.example.exceptions.TraineeServletException;
 import org.example.model.ProjectEntity;
 import org.example.repository.mapper.ProjectResultSetMapper;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,9 +13,9 @@ import java.util.UUID;
  *
  * @see org.example.repository.impl.BaseRepository
  */
-public class ProjectRepositoryChild extends BaseRepository<ProjectEntity> {
+public class ProjectRepository extends BaseRepository<ProjectEntity> {
 
-    public ProjectRepositoryChild(ConnectionManager connectionManager, ProjectResultSetMapper projectResultSetMapper) {
+    public ProjectRepository(ConnectionManager connectionManager, ProjectResultSetMapper projectResultSetMapper) {
         super(connectionManager, projectResultSetMapper, "trainee_servlet_task.projects");
     }
 

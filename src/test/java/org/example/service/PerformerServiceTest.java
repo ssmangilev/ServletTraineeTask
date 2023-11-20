@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.model.PerformerEntity;
-import org.example.repository.impl.PerformerRepositoryChild;
+import org.example.repository.impl.PerformerRepository;
 import org.example.service.impl.PerformerServiceImpl;
 import org.example.servlet.dto.IncomingPerformerDto;
 import org.example.servlet.dto.OutGoingPerformerDto;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 class PerformerServiceTest {
 
 
-    private final PerformerRepositoryChild repository = Mockito.mock(PerformerRepositoryChild.class);
+    private final PerformerRepository repository = Mockito.mock(PerformerRepository.class);
 
     private final PerformerDtoMapperImpl dtoMapper = Mockito.spy(PerformerDtoMapperImpl.class);
 

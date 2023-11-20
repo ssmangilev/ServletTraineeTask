@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.model.TaskEntity;
-import org.example.repository.impl.TaskRepositoryChild;
+import org.example.repository.impl.TaskRepository;
 import org.example.service.impl.TaskServiceImpl;
 import org.example.servlet.dto.IncomingTaskDto;
 import org.example.servlet.dto.OutGoingTaskDto;
@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 class TaskServiceTest {
-    private final TaskRepositoryChild repository = Mockito.mock(TaskRepositoryChild.class);
+    private final TaskRepository repository = Mockito.mock(TaskRepository.class);
     private final TaskDtoMapper dtoMapper = Mockito.spy(TaskDtoMapperImpl.class);
 
     @InjectMocks

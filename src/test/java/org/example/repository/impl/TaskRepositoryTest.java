@@ -21,13 +21,13 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doAnswer;
 
-class TaskRepositoryChildTest {
+class TaskRepositoryTest {
 
     ConnectionManager connectionManager = Mockito.mock(ConnectionManagerImpl.class);
 
     TaskResultSetMapper resultSetMapper = new TaskResultSetMapperImpl();
     @InjectMocks
-    TaskRepositoryChild repository = new TaskRepositoryChild(connectionManager, resultSetMapper);
+    TaskRepository repository = new TaskRepository(connectionManager, resultSetMapper);
 
     static String connectionUrl;
 

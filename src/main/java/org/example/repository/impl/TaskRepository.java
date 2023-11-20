@@ -12,9 +12,9 @@ import java.util.List;
  *
  * @see org.example.repository.impl.BaseRepository
  */
-public class TaskRepositoryChild extends BaseRepository<TaskEntity> {
+public class TaskRepository extends BaseRepository<TaskEntity> {
 
-    public TaskRepositoryChild(ConnectionManager connectionManager, TaskResultSetMapper taskResultSetMapper) {
+    public TaskRepository(ConnectionManager connectionManager, TaskResultSetMapper taskResultSetMapper) {
         super(connectionManager, taskResultSetMapper, "trainee_servlet_task.tasks");
     }
 
