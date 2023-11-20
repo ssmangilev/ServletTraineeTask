@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.exceptions.TraineeServletException;
 import org.example.model.PerformerEntity;
 import org.example.repository.impl.PerformerRepositoryChild;
 import org.example.service.impl.PerformerServiceImpl;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,9 +22,9 @@ import static org.mockito.Mockito.when;
 class PerformerServiceTest {
 
 
-    private PerformerRepositoryChild repository = Mockito.mock(PerformerRepositoryChild.class);
+    private final PerformerRepositoryChild repository = Mockito.mock(PerformerRepositoryChild.class);
 
-    private PerformerDtoMapperImpl dtoMapper = Mockito.spy(PerformerDtoMapperImpl.class);
+    private final PerformerDtoMapperImpl dtoMapper = Mockito.spy(PerformerDtoMapperImpl.class);
 
     @InjectMocks
     private PerformerService service = new PerformerServiceImpl(repository, dtoMapper);
@@ -36,20 +34,38 @@ class PerformerServiceTest {
     void should_find_By_Id_and_return_Performer_dto_CorrectTest() {
         //given
         UUID testId = UUID.randomUUID();
-        when(repository.findById(any())).thenReturn(createEntity());
+        PerformerEntity test = createEntity(testId);
+        when(repository.findById(any())).thenReturn(test);
+        OutGoingPerformerDto given = dtoMapper.map(test);
 
         //when
-        OutGoingPerformerDto result = service.findById(testId);
+        OutGoingPerformerDto actual = service.findById(testId);
 
         //then
-        assertThat(result).isNotNull().isExactlyInstanceOf(OutGoingPerformerDto.class);
+        assertThat(actual)
+                .isNotNull()
+                .isExactlyInstanceOf(OutGoingPerformerDto.class)
+                .isEqualTo(given);
+    }
+
+    @Test
+    void should_verify_that_constructor_is_up(){
+        //Given
+
+        //When
+        PerformerService service = new PerformerServiceImpl();
+
+        //Then
+        assertThat(service).isNotNull().isInstanceOf(PerformerService.class);
     }
 
     @Test
     void should_findAll_and_return_List_of_PerformerDto() {
 
         //Given
-        when(repository.findAll()).thenReturn(new ArrayList<>());
+        List<PerformerEntity> test = new ArrayList<>();
+        test.add(createEntity(UUID.randomUUID()));
+        when(repository.findAll()).thenReturn(test);
 
         //When
         List<OutGoingPerformerDto> actual = service.findAll();
@@ -106,7 +122,12 @@ class PerformerServiceTest {
         assertThat(actual).isTrue();
     }
 
-    private PerformerEntity createEntity() {
-        return new PerformerEntity();
+    private PerformerEntity createEntity(UUID testId) {
+        PerformerEntity entity = new PerformerEntity();
+        entity.setPerformerId(testId);
+        entity.setEmail("ivan@gmail.com");
+        entity.setPerformerTasks(new ArrayList<>());
+        entity.setPerformerProjects(new ArrayList<>());
+        return entity;
     }
 }

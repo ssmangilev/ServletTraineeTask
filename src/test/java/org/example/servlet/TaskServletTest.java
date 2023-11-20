@@ -1,7 +1,6 @@
 package org.example.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.exceptions.TraineeServletException;
 import org.example.service.impl.TaskServiceImpl;
 import org.example.servlet.dto.OutGoingTaskDto;
 import org.junit.jupiter.api.Test;
@@ -16,12 +15,10 @@ import org.mockito.stubbing.Answer;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -199,9 +196,10 @@ class TaskServletTest {
 
         ServletInputStream mockServletInputStream = mock(ServletInputStream.class);
 
-        when(mockServletInputStream.read(ArgumentMatchers.<byte[]>any(), anyInt(), anyInt())).thenAnswer(new Answer<Integer>() {
+        when(mockServletInputStream.read(ArgumentMatchers.<byte[]>any(), anyInt(), anyInt()))
+                .thenAnswer(new Answer<Integer>() {
             @Override
-            public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
+            public Integer answer(InvocationOnMock invocationOnMock) {
                 Object[] args = invocationOnMock.getArguments();
                 byte[] output = (byte[]) args[0];
                 int offset = (int) args[1];

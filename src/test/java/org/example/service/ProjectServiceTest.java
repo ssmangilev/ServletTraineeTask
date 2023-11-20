@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.exceptions.TraineeServletException;
 import org.example.model.ProjectEntity;
 import org.example.repository.impl.ProjectRepositoryChild;
 import org.example.service.impl.ProjectServiceImpl;
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -113,6 +112,11 @@ class ProjectServiceTest {
     }
 
     private ProjectEntity createEntity() {
-        return new ProjectEntity();
+        ProjectEntity entity = new ProjectEntity();
+        entity.setProjectStartDate(Timestamp.valueOf("2023-01-20 12:34:56"));
+        entity.setProjectDeadlineDate(Timestamp.valueOf("2023-11-20 12:34:56"));
+        entity.setProjectTasks(new ArrayList<>());
+        entity.setProjectPerformers(new ArrayList<>());
+        return entity;
     }
 }

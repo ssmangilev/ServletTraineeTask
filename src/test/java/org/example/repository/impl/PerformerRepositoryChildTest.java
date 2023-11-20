@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doAnswer;
 
 class PerformerRepositoryChildTest {
@@ -177,5 +178,21 @@ class PerformerRepositoryChildTest {
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("performerId", uuid)
                 .hasFieldOrPropertyWithValue("name", "Ivan");
+    }
+
+    @Test
+    void should_throw_custom_exception_getById() throws SQLException {
+        //Given
+        UUID uuid= UUID.fromString("3bbf370e-a326-4fe9-b75c-46c00314d0e");
+
+        doAnswer(invocation -> DriverManager.getConnection(
+                connectionUrl,
+                postgres.getUsername(),
+                postgres.getPassword())).when(connectionManager).getConnection();
+
+        // When
+
+        // Then
+       assertThrows(TraineeServletException.class,()-> repository.findById(uuid));
     }
 }

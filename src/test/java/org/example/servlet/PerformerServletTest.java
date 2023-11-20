@@ -1,8 +1,6 @@
 package org.example.servlet;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.exceptions.TraineeServletException;
 import org.example.service.impl.PerformerServiceImpl;
 import org.example.servlet.dto.OutGoingPerformerDto;
 import org.junit.jupiter.api.Test;
@@ -21,7 +19,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -205,9 +202,10 @@ class PerformerServletTest {
 
         ServletInputStream mockServletInputStream = mock(ServletInputStream.class);
 
-        when(mockServletInputStream.read(ArgumentMatchers.<byte[]>any(), anyInt(), anyInt())).thenAnswer(new Answer<Integer>() {
+        when(mockServletInputStream.read(ArgumentMatchers.<byte[]>any(), anyInt(), anyInt()))
+                .thenAnswer(new Answer<Integer>() {
             @Override
-            public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
+            public Integer answer(InvocationOnMock invocationOnMock) {
                 Object[] args = invocationOnMock.getArguments();
                 byte[] output = (byte[]) args[0];
                 int offset = (int) args[1];

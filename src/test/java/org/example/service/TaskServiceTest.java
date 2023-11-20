@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.exceptions.TraineeServletException;
 import org.example.model.TaskEntity;
 import org.example.repository.impl.TaskRepositoryChild;
 import org.example.service.impl.TaskServiceImpl;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,8 +20,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 class TaskServiceTest {
-    private TaskRepositoryChild repository = Mockito.mock(TaskRepositoryChild.class);
-    private TaskDtoMapper dtoMapper = Mockito.spy(TaskDtoMapperImpl.class);
+    private final TaskRepositoryChild repository = Mockito.mock(TaskRepositoryChild.class);
+    private final TaskDtoMapper dtoMapper = Mockito.spy(TaskDtoMapperImpl.class);
 
     @InjectMocks
     TaskService service = new TaskServiceImpl(repository, dtoMapper);

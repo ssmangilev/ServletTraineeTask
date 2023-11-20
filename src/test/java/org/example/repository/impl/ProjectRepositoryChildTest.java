@@ -2,10 +2,7 @@ package org.example.repository.impl;
 
 import org.example.db.ConnectionManager;
 import org.example.db.ConnectionManagerImpl;
-import org.example.exceptions.TraineeServletException;
-import org.example.model.PerformerEntity;
 import org.example.model.ProjectEntity;
-import org.example.model.TaskEntity;
 import org.example.repository.mapper.ProjectResultSetMapper;
 import org.example.repository.mapper.ProjectResultSetMapperImpl;
 import org.junit.jupiter.api.AfterAll;
@@ -22,6 +19,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doAnswer;
 
+@SuppressWarnings("ALL")
 class ProjectRepositoryChildTest {
 
     ConnectionManager connectionManager = Mockito.mock(ConnectionManagerImpl.class);
